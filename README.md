@@ -47,7 +47,9 @@ Before accessing the Imgur APIs you need to obtain the client-ID and client-secr
 
 ### Points of Improvement
 Since, this is a very basic example of how to use Imgur API, it can be enhanced further by:
-- Obtaining access tokens and refresh tokens to enable the tagging of each image to their users.
+- Obtaining access tokens and refresh tokens to enable more dedicated functionality.
+- To use Redis for storing tokens. 
 - Using Spring Security to enhance the security features.
 - Only basic Junit test cases has been added. More functionalities can be added to have a more robust testing framework.
+- Can look into adding the functionality for Kafka.
 
