@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/images")
+@RequestMapping("/api/v1/images")
 public class ImageController {
 
     @Autowired
@@ -23,6 +23,15 @@ public class ImageController {
     @Autowired
     private ImageService imageService;
 
+    /**
+     * Uploads an Image for a User post authenticating the user
+     *
+     * @param userName The username of the user uploading the image
+     * @param password The password of the user
+     * @param file The image file to be uploaded
+     * @return A ResponseEntity containing the uploaded image and a HttpStatus od 201 if image is
+     * uploaded successfully. It can also return HttpStatus 401, if the user authentication fails.
+     * */
     @PostMapping("/upload")
     public ResponseEntity<Image> uploadImage(@RequestParam String userName,
                                              @RequestParam String password,
@@ -38,6 +47,14 @@ public class ImageController {
         return new ResponseEntity<>(uploadedImage, HttpStatus.CREATED);
     }
 
+    /**
+     * Fetch all the images uploaded by the user
+     *
+     * @param userName The username of the user uploading the image
+     * @param password The password of the user
+     * @return A ResponseEntity containing the list of images uploaded by the user and a
+     * HttpStatus of 200. It can also return HttpStatus 401, if the user authentication fails.
+     * */
     @GetMapping("/user/{userName}")
     public ResponseEntity<List<Image>> getImagesByUser(@PathVariable String userName,
                                                        @RequestParam String password) {
@@ -52,6 +69,14 @@ public class ImageController {
         return ResponseEntity.ok(images);
     }
 
+    /**
+     * @param userName The username of the user uploading the image
+     * @param password The password of the user
+     * @param imageId The imageId of the image
+     * @return A ResponseEntity with HttpStatus of 204 if image is deleted successfully.
+     * It can also return HttpStatus 401, if the user authentication fails or 404 if there is no
+     * such image with such image id.
+     * */
     @DeleteMapping("/delete/{imageId}")
     public ResponseEntity<Void> deleteImage(@RequestParam String userName,
                                             @RequestParam String password,

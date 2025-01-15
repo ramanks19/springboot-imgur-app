@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Base64;
 import java.util.Map;
 
+
 @Slf4j
 @Service
 public class ImgurAPIService {
@@ -19,12 +20,25 @@ public class ImgurAPIService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    /**
+     * Builds HTTP headers for each of the Imgur API requests
+     *
+     * @return HttpHeaders with Authorization Header.
+     * */
     private HttpHeaders buildHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Client-ID" + clientId);
         return headers;
     }
 
+    /**
+     * Uploads an image to Imgur by encoding the image as a Base64 string and sending it as
+     * part of the request body.
+     *
+     * @param file The image file to upload.
+     * @return A map containing the details of the uploaded image.
+     * @throws RuntimeException If the upload operation fails.
+     * */
     public Map<String, Object> uploadImage(MultipartFile file) {
         try {
             byte[] fileBytes = file.getBytes();
@@ -55,6 +69,12 @@ public class ImgurAPIService {
         }
     }
 
+    /**
+     * Deletes an image from Imgur by its imageId
+     *
+     * @param imageId The ID of the image obtained from Imgur
+     * @throws RuntimeException if the code fails.
+     * */
     public void deleteImage(String imageId) {
         try {
             HttpHeaders headers = buildHeaders();
@@ -77,6 +97,13 @@ public class ImgurAPIService {
         }
     }
 
+    /**
+     * Retrieves the image details from Imgur using its imageId
+     *
+     * @param imageId The ID of the image whose details are to be fetched
+     * @return A map containing the details of the image
+     * @throws RuntimeException if the fetching operation fails
+     * */
     public Map<String, Object> getImageDetails(String imageId) {
         try {
             HttpHeaders headers = buildHeaders();
